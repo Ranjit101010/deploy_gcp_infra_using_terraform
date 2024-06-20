@@ -62,7 +62,7 @@ bq_tables = {
     dataset_id        = "api_stg"
     table_id          = "api_gcs_to_bq"
     type              = "DAY"
-    schema            = "C:\\Users\\Divya\\ranjit-1610110\\src\\schema\\stg_table.json"
+    schema            = "../src/schema/stg_table.json"
     delete_protection = false
   }
 }
