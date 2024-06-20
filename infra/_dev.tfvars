@@ -21,7 +21,7 @@ bucket = {
 fn_object = {
   api_to_gcs_source = {
     type        = "zip"
-    source_dir  = "../src"
+    source_dir  = "../src/api_to_gcs/"
     output_path = "./tmp/function.zip"
   }
 }
