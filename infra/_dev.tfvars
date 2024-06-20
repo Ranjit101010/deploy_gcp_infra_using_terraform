@@ -63,7 +63,7 @@ bq_tables = {
     table_id          = "api_gcs_to_bq"
     type              = "DAY"
     schema            = "C:\\Users\\Divya\\ranjit-1610110\\src\\schema\\stg_table.json"
-    delete_protection = true
+    delete_protection = false
   }
 }
 
@@ -72,7 +72,7 @@ cloud_functions = {
   "api_to_gcs" = {
     name               = "src_to_gcs"
     description        = " api to gcs  function"
-    runtime            = "python10"
+    runtime            = "python310"
     entry_point        = "api_to_gcs" # Set the entry point 
     max_instance_count = 1
     available_memory   = "256M"
