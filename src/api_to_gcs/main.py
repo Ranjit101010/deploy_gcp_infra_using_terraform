@@ -2,16 +2,15 @@
 
 import json
 import datetime
-import requests
 from google.cloud import storage
 
 
-def api_to_gcs(requests):
-    
+def api_to_gcs(request):
+
     '''
     '''
 
-    response = requests.get(
+    response = request.get(
         "http://127.0.0.1:8000",
         timeout = 100).json()
     total_count = len(response)
