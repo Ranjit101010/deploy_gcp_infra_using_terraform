@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "ranjit-1610110-tfstate"
+    bucket = "event-trigger-cloud-storage-d"
     prefix = "terraform/state"
   }
 } 
