@@ -1,0 +1,42 @@
+[
+    {
+        "name": "unique_key",
+        "type": "BYTES",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "order_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "order_date",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "order_customer_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "order_status",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "source_timestamp",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "start_date",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "end_date",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+    }
+]

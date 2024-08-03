@@ -1,0 +1,30 @@
+main:
+    params: [args]
+    steps:
+        - init:
+            assign:
+                - project_id: ${args.project_id}
+                - dataset_id: ${args.dataset_id}
+                - stored_procedure_name: ${args.stored_procedure_name}
+                - query: ${"CALL" + " " + "`" + project_id + "." + dataset_id + "." + stored_procedure_name + "`();"}
+                - bigquery_endpoint: ${"https://bigquery.googleapis.com/bigquery/v2/projects/"+project_id+"/queries"}
+        
+        - log_start:
+            call: sys.log
+            args:
+                text: >
+                    ${"The stored procedure is going to execute :"  + query}
+                severity: INFO
+
+        - staging_to_serving:
+            call: http.post
+            args:
+                url: ${bigquery_endpoint}
+                auth:
+                    type: OAuth2
+                body:
+                    query: ${query}
+                    useLegacySql: false
+            result: query_result
+        - return_result:
+            return: ${query_result}
