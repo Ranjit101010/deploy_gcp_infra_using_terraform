@@ -101,7 +101,7 @@ routines = {
   "stg-to-srv" = {
     routine_id      = "staging_to_serving"
     routine_type    = "PROCEDURE"
-    definition_body = "../deploy_gcp_infra_using_terraform/src/staging_to_serving.tftpl"
+    definition_body = "../src/staging_to_serving.tftpl"
     language        = "SQL"
   }
 }
