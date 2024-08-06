@@ -3,10 +3,10 @@ main:
     steps:
         - init:
             assign:
-                - project_id: ${args.project_id}
-                - dataset_id: ${args.dataset_id}
-                - stored_procedure_name: ${args.stored_procedure_name}
-                - location: ${args.location}
+                - project_id: "event-trigger-cloud-storage"
+                - dataset_id: "orders_stg_dataset"
+                - stored_procedure_name: "staging_to_serving"
+                - location: "asia-south1"
                 - query: ${"CALL" + " " + "`" + project_id + "." + dataset_id + "." + stored_procedure_name + "`();"}
                 - bigquery_endpoint: ${"https://bigquery.googleapis.com/bigquery/v2/projects/"+project_id+"/queries"}
         

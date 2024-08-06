@@ -114,3 +114,13 @@ gcp_workflows = {
     service_account_email = "wf-stg-to-srv-d@event-trigger-cloud-storage.iam.gserviceaccount.com"
   }
 }
+
+
+bucket_notifications = {
+  payload_format = "JSON_API_V1"
+  event_types    = ["OBJECT_FINALIZE"]
+}
+
+pubsub_topic = {
+  name = "gcs-bucket-event-finalize-d"
+}

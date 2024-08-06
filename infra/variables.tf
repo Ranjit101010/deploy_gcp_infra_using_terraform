@@ -98,3 +98,16 @@ variable "gcp_workflows" {
   }))
 
 }
+
+variable "bucket_notifications" {
+  type = object({
+    payload_format = string
+    event_types    = list(string)
+  })
+}
+
+variable "pubsub_topic" {
+  type = object({
+    name = string
+  })
+}
