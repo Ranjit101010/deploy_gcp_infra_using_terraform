@@ -17,7 +17,7 @@ resource "google_cloud_scheduler_job" "workflow_scheduler" {
     }
     body = base64encode(<<EOF
       {"argument":"{
-      \"project_id\":\"${var.project_id}\",\"dataset_id\":\"${google_bigquery_dataset.orders_dataset["stg_dataset"].dataset_id}\",\"stored_procedure_name\" : \"${google_bigquery_routine.staging_to_serving["stg-to-srv"].routine_id}\"}"}
+      \"project_id\":\"${var.project_id}\",\"dataset_id\":\"${google_bigquery_dataset.orders_dataset["stg_dataset"].dataset_id}\",\"stored_procedure_name\" : \"${google_bigquery_routine.staging_to_serving["stg-to-srv"].routine_id}\",\"location\":\"${var.region}\"}"}
     EOF
     )
   }

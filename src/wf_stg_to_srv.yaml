@@ -6,6 +6,7 @@ main:
                 - project_id: ${args.project_id}
                 - dataset_id: ${args.dataset_id}
                 - stored_procedure_name: ${args.stored_procedure_name}
+                - location: ${args.location}
                 - query: ${"CALL" + " " + "`" + project_id + "." + dataset_id + "." + stored_procedure_name + "`();"}
                 - bigquery_endpoint: ${"https://bigquery.googleapis.com/bigquery/v2/projects/"+project_id+"/queries"}
         
@@ -16,7 +17,7 @@ main:
                     ${"The stored procedure is going to execute :"  + query}
                 severity: INFO
 
-        - staging_to_serving:
+        - staging_to_serving_job:
             call: http.post
             args:
                 url: ${bigquery_endpoint}
@@ -26,5 +27,47 @@ main:
                     query: ${query}
                     useLegacySql: false
             result: query_result
+
+        - set_job_id:
+            assign:
+                - job_id: ${query_result.body.jobReference.jobId}
+
+        - staging_to_serving_job_details:
+            call: http.get
+            args:
+                url: ${"https://bigquery.googleapis.com/bigquery/v2/projects/" + project_id + "/jobs/" + job_id + "?location=" + location}
+                auth:
+                    type: OAuth2
+            result: bq_job_response
+
+        - check_job_status:
+            switch:
+                - condition: ${bq_job_response.body.status.state == "DONE"}
+                  steps:
+                    - get_job_details:
+                        next: setJobCompletionVars
+                - condition: ${bq_job_response.body.status.state != "DONE"}
+                  steps:
+                    - wait_for_10s:
+                        call: sys.sleep
+                        args:
+                            seconds: 25
+                        next: staging_to_serving_job_details
+
+        - setJobCompletionVars:
+            assign:
+                - jobCompletionStats:
+                    jobId: ${job_id}
+                    totalBytesBilled: ${bq_job_response.body.statistics.query.totalBytesBilled}
+                    totalBytesProcessed: ${bq_job_response.body.statistics.query.totalBytesProcessed}
+                    totalSlotMs: ${bq_job_response.body.statistics.query.totalSlotMs }
+                    numChildJobs: ${bq_job_response.body.statistics.numChildJobs }
+        
+        - logJobDetails:
+            call: sys.log
+            args:
+                text: ${jobCompletionStats}
+                severity: INFO
+
         - return_result:
-            return: ${query_result}
+            return: ${bq_job_response}

@@ -27,7 +27,7 @@ resource "google_bigquery_routine" "staging_to_serving" {
   dataset_id   = google_bigquery_dataset.orders_dataset["stg_dataset"].dataset_id
   routine_id   = each.value.routine_id
   routine_type = each.value.routine_type
-  definition_body = templatefile("${path.module}/../${each.value.definition_body}", { "project_id" = var.project_id,
+  definition_body = templatefile("${path.module}/${each.value.definition_body}", { "project_id" = var.project_id,
   "staging_dataset_id" = google_bigquery_dataset.orders_dataset["stg_dataset"].dataset_id })
   language = each.value.language
 }
